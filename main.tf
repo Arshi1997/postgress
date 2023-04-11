@@ -1,11 +1,11 @@
 # Create Private Endpint
 resource "azurerm_private_endpoint" "endpoint" {
-  name                = "kopicloudnortheurope_pe"
+  name                = var.private_endpoint_name
   resource_group_name = azurerm_resource_group.network-rg.name
   location            = azurerm_resource_group.network-rg.location
   subnet_id           = azurerm_subnet.endpoint-subnet.id
   private_service_connection {
-    name                           = "kopicloudnortheurope_psc"
+    name                           = var.service_connection_name
     private_connection_resource_id = azurerm_storage_account.asa.id   # delegation-subnet id
     is_manual_connection           = false
     subresource_names              = ["blob"]
@@ -15,7 +15,7 @@ resource "azurerm_private_endpoint" "endpoint" {
 #not sure if required or not
 # Create DNS A Record
 resource "azurerm_private_dns_a_record" "dns_a" {
-  name                = "kopicloudnortheurope"
+  name                = var.dns_a_record
   zone_name           = azurerm_private_dns_zone.dns-zone.name
   resource_group_name = azurerm_resource_group.network-rg.name
   ttl                 = 300
