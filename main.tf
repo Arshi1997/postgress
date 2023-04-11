@@ -6,7 +6,7 @@ resource "azurerm_private_endpoint" "endpoint" {
   subnet_id           = azurerm_subnet.endpoint-subnet.id
   private_service_connection {
     name                           = "kopicloudnortheurope_psc"
-    private_connection_resource_id = azurerm_storage_account.asa.id
+    private_connection_resource_id = azurerm_storage_account.asa.id   # delegation-subnet id
     is_manual_connection           = false
     subresource_names              = ["blob"]
   }
